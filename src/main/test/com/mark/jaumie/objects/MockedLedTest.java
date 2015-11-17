@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class LedTestMocked {
+public class MockedLedTest {
 
     private LED led1;
 

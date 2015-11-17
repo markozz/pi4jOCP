@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class ButtonTestMocked {
+public class MockedButtonTest {
 
     private GpioController controller = null;
     private Button button1 = null;
@@ -29,7 +29,7 @@ public class ButtonTestMocked {
         Mockito.when(controller.provisionDigitalInputPin(RaspiPin.GPIO_01,"Button #1")).thenReturn(mockedPin);
         button1 = new Button(controller);
 
-        Assert.assertTrue(button1.isPressed());
+        Assert.assertTrue("Expected button to be pressed",button1.isPressed());
     }
 
     @Test
