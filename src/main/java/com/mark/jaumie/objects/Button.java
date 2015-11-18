@@ -6,8 +6,9 @@ import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 public class Button {
-    private Pin buttonPin = RaspiPin.GPIO_01;
     private String buttonName = "Button #1";
+    private Pin buttonPin = RaspiPin.GPIO_01;
+
     public GpioPinDigitalInput button;
 
     public Button(GpioController controller) {
