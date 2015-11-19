@@ -45,4 +45,13 @@ public class MockedButtonTest {
 
         Assert.assertFalse("Expected unpressed button",button1.isPressed());
     }
+
+    @Test
+    public void testPrettyName() {
+        button1 = new Button(controller);
+
+        String expectedName = "Button #1";
+        String actualName = button1.getName();
+        Assert.assertEquals("Expected name to be "+expectedName+" but was: "+actualName,expectedName,actualName);
+    }
 }

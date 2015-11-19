@@ -1,11 +1,12 @@
 package com.mark.jaumie.objects;
 
 import com.mark.jaumie.annotations.Device;
+import com.mark.jaumie.interfaces.ILight;
 import com.pi4j.io.gpio.*;
 
 import java.io.IOException;
 
-public class LED {
+public class LED implements ILight {
     private String ledName = "LED #1";
     private Pin ledPin = RaspiPin.GPIO_02;
 
@@ -41,7 +42,7 @@ public class LED {
         return state;
     }
 
-    public String getPrettyName() {
+    public String getName() {
         return ledName;
     }
 }

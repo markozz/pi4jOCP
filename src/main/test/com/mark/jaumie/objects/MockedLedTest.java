@@ -58,7 +58,7 @@ public class MockedLedTest {
 
     @Test
     public void testPrettyName() {
-        String name = led1.getPrettyName();
+        String name = led1.getName();
         Assert.assertEquals("Expected name to be LED #1 but was: "+name,"LED #1",name);
     }
 

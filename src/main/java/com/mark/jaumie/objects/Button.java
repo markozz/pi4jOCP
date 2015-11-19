@@ -2,8 +2,6 @@ package com.mark.jaumie.objects;
 
 
 import com.pi4j.io.gpio.*;
-import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
-import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 public class Button {
     private String buttonName = "Button #1";
@@ -22,5 +20,9 @@ public class Button {
             state = true;
         }
         return state;
+    }
+
+    public String getName() {
+        return buttonName;
     }
 }

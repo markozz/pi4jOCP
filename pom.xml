@@ -18,6 +18,21 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!-- Different profiles for environments -->
+    <profiles>
+        <profile>
+            <id>pi</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <host>localhost</host>
+                <user>pi</user>
+                <password>raspberry</password>
+            </properties>
+        </profile>
+    </profiles>
+
     <!-- Build Settings -->
     <build>
         <directory>${project.basedir}/target</directory>
@@ -37,6 +52,13 @@
             </testResource>
         </testResources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -83,8 +105,48 @@
                     </descriptorRefs>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.groovy.maven</groupId>
+                <artifactId>gmaven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>deploy-to-pi</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <source>${basedir}/src/main/resources/PiDeploy.groovy</source>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.ant</groupId>
+                        <artifactId>ant-jsch</artifactId>
+                        <version>1.9.6</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
+
+    <!-- Required to use the deploy phase but we will not deploy to repo -->
+    <distributionManagement>
+        <!-- use the following if you're not using a snapshot version. -->
+        <repository>
+            <id>repo</id>
+            <name>Repository Name</name>
+            <url>scp://host/path/to/repo</url>
+        </repository>
+        <!-- use the following if you ARE using a snapshot version. -->
+        <snapshotRepository>
+            <id>repo</id>
+            <name>Repository Name</name>
+            <url>scp://host/path/to/repo</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 
     <dependencies>
         <dependency>
