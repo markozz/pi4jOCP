@@ -2,10 +2,17 @@ host = pom.properties.host
 usr = pom.properties.user
 psw = pom.properties.password
 
+verbose = false
+
 buildDir = project.build.directory
 deployDir = "~/jaumie"
-file = "$buildDir\\${project.artifactId}-${project.version}-jar-with-dependencies.jar"
+jar = "${project.artifactId}-${project.version}-jar-with-dependencies.jar"
+file = "$buildDir\\$jar"
 
+// Suppress output ant
+if (verbose == false) {
+    ant.project.buildListeners.firstElement().messageOutputLevel = 0
+}
 
 log.info("Deploying to pi....")
 
@@ -15,7 +22,7 @@ ant.sshexec(trust: true,
         username: usr,
         password: psw,
         command: "pkill -f 'java -jar'",
-        verbose: true,
+        verbose: verbose,
         failonerror: false
 
 )
@@ -33,7 +40,7 @@ ant.scp(trust: true,
         file: file,
         todir: "$usr@$host:$deployDir",
         password: psw,
-        verbose: true
+        verbose: verbose
 )
 
 log.info("Starting JVM.")
@@ -41,7 +48,7 @@ ant.sshexec(trust: true,
         host: host,
         username: usr,
         password: psw,
-        command: "java -jar $deployDir/$file > /dev/null 2>&1 &"
+        command: "java -jar $deployDir/$jar > /dev/null 2>&1 &"
 )
 
 log.info("Deployment done!")
